@@ -19,11 +19,13 @@ services:
   node-app:
     build:
       context: ./node
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     container_name: node-app
-    entrypoint: ["sh", "-c", "dockerize -wait tcp://mysql:3306 -timeout 30s && node index.js"]
+    entrypoint: ["sh", "-c", "dockerize -wait tcp://mysql:3306 -timeout 30s && npm install && node index.js"]
     restart: always
     tty: true
+    volumes:
+      - ./node:/usr/src/app
     networks:
       - node-network
     depends_on:
@@ -32,7 +34,7 @@ services:
   ngix:
     build:
       context: ./nginx
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     container_name: nginx
     restart: always
     tty: true

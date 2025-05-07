@@ -6,8 +6,6 @@ COPY . .
 
 EXPOSE 3000
 
-RUN npm install
-
 ENV DOCKERIZE_VERSION v0.9.3
 
 RUN apt-get update \
